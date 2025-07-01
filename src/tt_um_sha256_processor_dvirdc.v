@@ -11,9 +11,9 @@ module tt_um_sha256_processor_dvirdc (
     input  wire       rst_n
 );
     
-    logic uart_rx;  
-    logic uart_tx;
-    logic led0;  
+    wire uart_rx;  
+    wire uart_tx;
+    wire led0;  
 
     assign uart_rx = ui_in[3];
     assign uart_tx = uo_out[4];
