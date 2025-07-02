@@ -1,0 +1,29 @@
+# Read Verilog source files.
+# The order should be from lowest-level module to highest-level.
+read_verilog src/sha256_core.v
+read_verilog src/sha256_processor.v
+read_verilog src/uart_tx_core.v
+read_verilog src/uart_rx_core.v
+read_verilog src/top_uart_sha256.v
+read_verilog src/tt_um_sha256_processor_dvirdc.v
+
+# Set the top-level module
+hierarchy -check -top tt_um_sha256_processor_dvirdc
+
+# Synthesis process
+proc; # Process 'always' and 'initial' blocks
+opt;         # Perform simple optimizations
+fsm;         # Extract and optimize finite state machines
+opt;         # More optimization
+memory;      # Map memories to cells
+opt;         # Clean up after memory mapping
+techmap;     # Map to generic technology cells
+opt;         # Final cleanup before ABC
+
+# ABC for technology mapping.
+# This is a generic pass without a specific .lib file.
+# For a real ASIC flow, you would provide a library with -liberty <file.lib>
+abc -liberty /path/to/your/pdk/ihp-sg13g2/libs.ref/sg13g2_stdcell.lib
+
+# Write out the synthesized netlist
+write_verilog synth_out.v 
