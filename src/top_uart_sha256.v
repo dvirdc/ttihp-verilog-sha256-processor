@@ -62,7 +62,7 @@ module top_uart_sha256 (
     reg [7:0] byte_counter;
     reg [6:0] send_index;
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk) begin
         if (rst) begin
             state <= IDLE;
             data_valid <= 0;
