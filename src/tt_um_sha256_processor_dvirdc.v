@@ -18,6 +18,11 @@ module tt_um_sha256_processor_dvirdc (
     assign uart_rx = ui_in[3];
     assign uart_tx = uo_out[4];
 
+    assign uo_out[7:5] = 3'b000;
+    assign uo_out[3:0] = 4'b0000;
+    assign uio_out = 8'b00000000;
+    assign uio_oe = 8'b00000000;  // All pins as inputs
+
     wire internal_rst = ~rst_n;
 
     top_uart_sha256 top (

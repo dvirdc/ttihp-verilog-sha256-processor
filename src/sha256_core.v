@@ -44,7 +44,7 @@ module sha256_core (
     reg [31:0] a, b, c, d, e, f, g, h;
     reg [31:0] h0, h1, h2, h3, h4, h5, h6, h7;
     reg [31:0] w[0:63]; // Full message schedule array
-    reg [6:0] t;        // General purpose counter for rounds and schedule prep
+    reg [5:0] t;        // General purpose counter for rounds and schedule prep
 
     // State machine
     reg [1:0] state;
