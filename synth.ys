@@ -23,7 +23,7 @@ opt;         # Final cleanup before ABC
 # ABC for technology mapping.
 # This is a generic pass without a specific .lib file.
 # For a real ASIC flow, you would provide a library with -liberty <file.lib>
-abc -liberty /path/to/your/pdk/ihp-sg13g2/libs.ref/sg13g2_stdcell.lib
+abc -liberty /foss/pdks/ihp-sg13g2/libs.ref/sg13g2_stdcell.lib
 
 # Write out the synthesized netlist
 write_verilog synth_out.v 
