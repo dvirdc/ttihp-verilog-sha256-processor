@@ -138,7 +138,8 @@ module sha256_processor (
                     end else begin
                         if (!need_length_block) begin
                             // Write 64-bit big-endian message length into last 8 bytes
-                            block_buffer[63:0] <= total_bits;
+                            for (i = 0; i < 8; i = i + 1)
+                                block_buffer[63 - i*8 -: 8] <= total_bits[63 - i*8 -: 8];
                         end
                         block_ready <= 1;
                         state <= HASH;
@@ -165,8 +166,15 @@ module sha256_processor (
                         hash_state <= core_hash_out;  // Update hash chain
 
                         if (seen_last && need_length_block) begin
-                            // Prepare second padding block with 0x80, padding, and length
-                            block_buffer <= {8'h80, 440'd0, total_bits};
+                            // Prepare second padding block
+                            block_buffer <= 512'b0;
+                            // Add 0x80 at the beginning if message filled previous block exactly
+                            block_buffer[511:504] <= 8'h80;
+
+                            // Write 64-bit big-endian total_bits at end
+                            
+                            for (i = 0; i < 8; i = i + 1)
+                                block_buffer[63 - i*8 -: 8] <= total_bits[63 - i*8 -: 8];
 
                             block_ready <= 1;
                             need_length_block <= 0;
